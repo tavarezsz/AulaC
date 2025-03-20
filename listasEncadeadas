@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+struct el {
+	int info;
+	struct el *prox
+};
+
+typedef struct el elemento;
+
+elemento *inicio;
+
+void insereinicio(int val){
+    
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+    novo->info = val;
+    novo->prox = NULL;
+    
+    if(inicio == NULL){
+        inicio = novo;
+    }
+    else{
+        novo->prox = inicio;
+        inicio = novo;
+    }
+    
+}
+void inserefim(int val){
+    elemento *aux = inicio;
+    
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+    novo->info = val;
+    novo->prox = NULL;
+
+    if(inicio == NULL){
+        inicio = novo;
+    }
+    else{
+        
+        while(aux->prox !=NULL)
+            aux = aux->prox;
+        aux->prox = novo;
+    }
+    
+}
+void escreveLista(){
+    elemento *aux = inicio;
+    
+    printf("\n Lista:\n");
+    
+    while(aux!=NULL){
+        printf("%d ",aux->info);
+        aux = aux->prox;
+    }
+    printf("\n");
+    
+
+}
+
+int main()
+{
+	inicio=NULL;
+
+    insereinicio(5);
+    escreveLista();
+    insereinicio(12);
+    escreveLista();
+    inserefim(8);
+    escreveLista();
+
+	return 0;
+}
