@@ -3,69 +3,102 @@
 struct el {
 	int info;
 	struct el *prox
-};
+	};
 
 typedef struct el elemento;
 
 elemento *inicio;
 
-void insereinicio(int val){
-    
-    elemento *novo = (elemento*)malloc(sizeof(elemento));
-    novo->info = val;
-    novo->prox = NULL;
-    
-    if(inicio == NULL){
-        inicio = novo;
-    }
-    else{
-        novo->prox = inicio;
-        inicio = novo;
-    }
-    
-}
-void inserefim(int val){
-    elemento *aux = inicio;
-    
-    elemento *novo = (elemento*)malloc(sizeof(elemento));
-    novo->info = val;
-    novo->prox = NULL;
+void insereinicio(int val) {
 
-    if(inicio == NULL){
-        inicio = novo;
-    }
-    else{
-        
-        while(aux->prox !=NULL)
-            aux = aux->prox;
-        aux->prox = novo;
-    }
-    
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	novo->info = val;
+	novo->prox = NULL;
+
+	if(inicio == NULL) {
+		inicio = novo;
+	}
+	else {
+		novo->prox = inicio;
+		inicio = novo;
+	}
+
 }
-void escreveLista(){
-    elemento *aux = inicio;
+void inserefim(int val) {
+	elemento *aux = inicio;
+
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	novo->info = val;
+	novo->prox = NULL;
+
+	if(inicio == NULL) {
+		inicio = novo;
+	}
+	else {
+		while(aux->prox !=NULL)
+			aux = aux->prox;
+		aux->prox = novo;
+	}
+
+}
+void escreveLista() {
+	elemento *aux = inicio;
+
+	printf("\n Lista:\n");
+
+	while(aux!=NULL) {
+		printf("%d ",aux->info);
+		aux = aux->prox;
+	}
+	printf("\n");
+
+
+}
+
+void insereordenado(int val) {
     
-    printf("\n Lista:\n");
-    
-    while(aux!=NULL){
-        printf("%d ",aux->info);
-        aux = aux->prox;
+    //A lista tem que estar ordenada para funcionar
+	elemento *aux = inicio, *ant = inicio;
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	novo->info = val;
+	novo->prox = NULL;
+	
+	if(inicio==NULL){
+	    inicio = novo;
+    	return;
+	}
+    else if(novo->info <= inicio->info){ //se for o menor elemento
+        insereinicio(val); 
+        return;
     }
-    printf("\n");
-    
+
+	while(aux != NULL && aux->info < novo->info) {
+	    if(aux->prox == NULL){ //se for o maior elemento da lista
+	        inserefim(val);
+	        return;
+	    }
+		ant=aux;
+		aux=aux->prox;
+	}
+	
+	ant->prox=novo;
+	novo->prox = aux;
 
 }
 
 int main()
 {
+    //testes
 	inicio=NULL;
-
-    insereinicio(5);
-    escreveLista();
-    insereinicio(12);
-    escreveLista();
-    inserefim(8);
-    escreveLista();
+	insereinicio(5);
+	inserefim(8);
+	inserefim(12);
+	escreveLista();
+	insereordenado(9);
+	insereordenado(20);
+	insereordenado(0);
+	insereordenado(300);
+	escreveLista();
 
 	return 0;
 }
