@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct el {
 	int info;
-	struct el *prox
+	struct el *prox;
 	};
 
 typedef struct el elemento;
@@ -22,6 +23,7 @@ void insereinicio(int val) {
 		novo->prox = inicio;
 		inicio = novo;
 	}
+	
 
 }
 void inserefim(int val) {
@@ -39,6 +41,7 @@ void inserefim(int val) {
 			aux = aux->prox;
 		aux->prox = novo;
 	}
+	
 
 }
 void escreveLista() {
@@ -51,7 +54,6 @@ void escreveLista() {
 		aux = aux->prox;
 	}
 	printf("\n");
-
 
 }
 
@@ -83,8 +85,35 @@ void insereordenado(int val) {
 	
 	ant->prox=novo;
 	novo->prox = aux;
+	
+}
+
+void remover(int val){
+    //terminar
+    elemento *aux = inicio, *ant = inicio;
+    
+    if(inicio->info == val){ //remover o primeiro
+        inicio = inicio->prox;
+        free(aux);
+        return;
+    }
+
+    while(aux!=NULL && aux->info !=val){
+        if(aux->prox ==NULL && aux->info == val){//se for o maior valor
+            ant->prox = NULL;//desalocar do penultimo
+            free(aux);
+        }
+        ant=aux;
+        aux = aux->prox;
+    }
+    
+    if(aux!=NULL){
+        ant->prox = aux->prox;
+        free(aux);
+    }
 
 }
+    
 
 int main()
 {
@@ -95,10 +124,14 @@ int main()
 	inserefim(12);
 	escreveLista();
 	insereordenado(9);
-	insereordenado(20);
+	insereordenado(9);
 	insereordenado(0);
 	insereordenado(300);
+	insereordenado(-6);
 	escreveLista();
+	remover(9);
+	escreveLista();
+
 
 	return 0;
 }
