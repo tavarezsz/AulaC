@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct el {
+	char info[20];
+	struct el *prox;
+	};
+
+typedef struct el elemento;
+
+elemento *inicio;
+
+void insereinicio(char val[20]) {
+
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	strcpy(novo->info,val);
+	novo->prox = NULL;
+
+	if(inicio == NULL) {
+		inicio = novo;
+	}
+	else {
+		novo->prox = inicio;
+		inicio = novo;
+	}
+	
+
+}
+void inserefim(char val[20]) {
+	elemento *aux = inicio;
+
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	strcpy(novo->info,val);
+	novo->prox = NULL;
+
+	if(inicio == NULL) {
+		inicio = novo;
+	}
+	else {
+		while(aux->prox !=NULL)
+			aux = aux->prox;
+		aux->prox = novo;
+	}
+	
+
+}
+void escreveLista() {
+	elemento *aux = inicio;
+
+	printf("\n Lista:\n");
+
+	while(aux!=NULL) {
+		printf("%s ",aux->info);
+		aux = aux->prox;
+	}
+	printf("\n");
+
+}
+
+void insereordenado(char val[20]) {
+    
+    //A lista tem que estar ordenada para funcionar
+	elemento *aux = inicio, *ant = inicio;
+	elemento *novo = (elemento*)malloc(sizeof(elemento));
+	strcpy(novo->info,val);
+	novo->prox = NULL;
+	
+	if(inicio==NULL){
+	    inicio = novo;
+    	return;
+	}
+    else if(strcmp(novo->info,inicio->info) <= 0){ //se for o menor elemento
+        insereinicio(val); 
+        return;
+    }
+
+	while(aux != NULL && (strcmp(aux->info,novo->info)<0)) {
+	    if(aux->prox == NULL){ //se for o maior elemento da lista
+	        inserefim(val);
+	        return;
+	    }
+		ant=aux;
+		aux=aux->prox;
+	}
+	
+	ant->prox=novo;
+	novo->prox = aux;
+	
+}
+
+
+void remover(int val){ //terminar
+    elemento *aux = inicio, *ant = inicio;
+    
+    if(strcmp(inicio->info,val)==0){ //remover o primeiro
+        inicio = inicio->prox;
+        free(aux);
+        return;
+    }
+
+    while(aux!=NULL && strcmp(aux->info,val) < 0){
+        if(aux->prox ==NULL && strcmp(aux->info,val) ==0){//se for o maior valor
+            ant->prox = NULL;//desalocar do penultimo
+            free(aux);
+        }
+        ant=aux;
+        aux = aux->prox;
+    }
+    
+    if(aux!=NULL){
+        ant->prox = aux->prox;
+        free(aux);
+    }
+
+}
+
+    
+
+int main()
+{
+    //testes
+	inicio=NULL;
+	insereinicio("joao");
+	inserefim("maria");
+	insereordenado("sla");
+	insereordenado("a");
+	insereordenado("zx");
+	remover("maria");
+	escreveLista();
+
+
+
+	return 0;
+}
