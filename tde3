@@ -90,8 +90,9 @@ void insereordenado(char val[20]) {
 }
 
 
-void remover(int val){ //terminar
+void remover(char val[20]){ //terminar
     elemento *aux = inicio, *ant = inicio;
+    
     
     if(strcmp(inicio->info,val)==0){ //remover o primeiro
         inicio = inicio->prox;
@@ -115,7 +116,6 @@ void remover(int val){ //terminar
 
 }
 
-    
 
 int main()
 {
@@ -126,7 +126,8 @@ int main()
 	insereordenado("sla");
 	insereordenado("a");
 	insereordenado("zx");
-	remover("maria");
+    insereordenado("yx");
+	remover("a");
 	escreveLista();
 
 
