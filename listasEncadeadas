@@ -44,16 +44,16 @@ void inserefim(int val) {
 	
 
 }
-void escreveLista() {
-	elemento *aux = inicio;
+void escreveLista( elemento *ini) {
 
-	printf("\n Lista:\n");
-
-	while(aux!=NULL) {
-		printf("%d ",aux->info);
-		aux = aux->prox;
+	if(ini!=NULL){
+		printf("%d ",ini->info);
+		ini = ini->prox;	
+		escreveLista(ini);
 	}
-	printf("\n");
+	else{
+		printf("\n");
+	}
 
 }
 
@@ -113,6 +113,25 @@ void remover(int val){
     }
 
 }
+
+void inverteLista(){
+	elemento *aux = inicio;
+	elemento *tmp;
+
+	inicio = inicio->prox;
+	aux->prox = NULL;
+	
+	while(inicio!=NULL){
+		tmp = inicio;
+		inicio = inicio->prox;
+		tmp->prox = aux;
+		aux = tmp;
+	}
+	
+	inicio = aux;
+	
+	
+}
     
 
 int main()
@@ -122,15 +141,13 @@ int main()
 	insereinicio(5);
 	inserefim(8);
 	inserefim(12);
-	escreveLista();
 	insereordenado(9);
 	insereordenado(9);
-	insereordenado(0);
-	insereordenado(300);
-	insereordenado(-6);
-	escreveLista();
-	remover(9);
-	escreveLista();
+	
+	escreveLista(inicio);
+	
+	inverteLista();
+	escreveLista(inicio);
 
 
 	return 0;
