@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define tam 4
+#define tam 5
 
 int nivel[tam];
 int low[tam];
 
 
 int g[tam][tam] = {
-	{0,1,0,0},
-	{0,1,1,0},
-	{0,0,1,1},
-	{0,0,1,0},
+	{0,1,1,0,0},
+	{1,0,1,1,1},
+	{1,1,0,0,0},
+	{0,1,0,0,1},
+	{0,1,0,1,0},
 };
 
 
 
 
-void dfs(int v, int niv, int N){
+void dfs(int v, int niv, int N, int g**){
 	nivel[v] = niv;
 	
 	for(int i=0;i<N;i++){
@@ -32,7 +33,7 @@ void dfs(int v, int niv, int N){
 
 
 
-int lowpt(int v, int N){
+int lowpt(int v, int N, int g**){
 	if(low[v] !=-1) 
 		return low[v];
 		
@@ -53,10 +54,23 @@ int lowpt(int v, int N){
 	
 }
 
-int isArt(int v,int N){
-	
+int isArt(int v,int N,int raiz){
+    
+    int cont=0;
+    if(v == raiz){
+        for(int i = 0; i<N;i++){
+    		if(g[v][i] == 2){ 
+    		    cont++;
+
+    		}
+    	}
+    	if(cont>1) return 1;
+    	else return 0;
+    }
+    	
 	for(int i = 0; i<N;i++){
-		if(g[v][i] == 2 && low[i] == v){ //se o low do filho for o pai
+	    
+		if(g[v][i] == 2 && (low[i] == v || low[i] == i)){ //se o low do filho for o pai ou ele mesmo
 			return 1;
 		}
 	}
@@ -72,6 +86,7 @@ int main(){
 	}
 
 	
+	/*
 
 	int n,m,x,y, cont=1;
 	
@@ -80,13 +95,18 @@ int main(){
 	for(int i=0;i<n;i++){
 		scanf("%d %d",&x,&y);
 	}
+	*/
 	
 	
 	
 	dfs(0,0,tam);
 	int raiz = lowpt(0,tam);
 	
-	printf("%d", isArt(2,tam));
+	for (int i = 0; i < tam; i++) {
+	    printf("%d",low[i]);
+	}
+	
+	printf("\n%d", isArt(0,tam,0));
 	
 	
 }
